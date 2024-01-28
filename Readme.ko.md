@@ -1,6 +1,6 @@
 <div align="center">
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/README.md) (Translated by Chatgpt)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/README.md) (Translated by ChatGPT)
 
 </div>
 
@@ -36,11 +36,11 @@ RCON 사용을 위해 `PalWorldSettings.ini` 파일에서 `RCONEnabled=True` 로
 git clone https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop.git
 ```
 
-### Install Dependency
+### Install Dependencies
 
 본 스크립트는 Python 3.10 버전에서 테스트 되었습니다.
 
-커맨드 창에서 다음을 실행합니다.
+관련된 패키지 설치를 위하여 커맨드 창에서 다음을 실행합니다.
 
 ```bash
 pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
@@ -48,7 +48,7 @@ pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
 
 ### setting.py 파일 수정
 
-서버 설정에 맞게 Setting.py 파일을 수정합니다.
+서버 설정에 맞게 `src\settings.py` 파일을 수정합니다.
 
 `palworldExePath` 에는 `{PalServerPath}\PalServer\PalServer.exe` 의 경로를 입력하십시오.
 

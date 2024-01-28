@@ -2,6 +2,8 @@
 
 [![ko](https://img.shields.io/badge/lang-ko--kr-green.svg)](https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/README.ko.md)
 
+Translated by ChatGPT
+
 </div>
 
 # PalWorld-Dedicated-Server-Auto-Start-Stop
@@ -36,9 +38,9 @@ Download the code from this repository using the "Download ZIP" feature or execu
 git clone https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop.git
 ```
 
-### Install Dependency
+### Install Dependencies
 
-This script has been tested with Python 3.10. Execute the following command in the command prompt:
+This script has been tested with Python 3.10. To install dependencies, execute the following command in the command prompt:
 
 ```Python
 pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
@@ -46,7 +48,7 @@ pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
 
 ### Modify setting.py File
 
-Modify the Setting.py file according to your server settings.
+Modify the `src\settings.py` file according to your server settings.
 
 For the `palworldExePath`, enter the path to `{PalServerPath}\PalServer\PalServer.exe`.
 
