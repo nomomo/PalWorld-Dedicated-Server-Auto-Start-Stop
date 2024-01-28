@@ -98,6 +98,8 @@ The console window is automatically on and the log is printed. The log is writte
 
 If `"useWebServer": True` is set in the configuration, check if the Admin Page is accessible. The default URL is `http://localhost:8212/`.
 
+<img src="https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/images/AdminPageSample.png?raw=true" width="300px">
+
 ## How does this script work?
 
 ### Automatic Server Start

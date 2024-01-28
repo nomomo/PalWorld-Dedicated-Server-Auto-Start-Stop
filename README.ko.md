@@ -98,6 +98,8 @@ python main.py
 
 설정에서 `"useWebServer": True`인 경우, Admin Page가 잘 접속되는지 확인하십시오. 기본값의 경우 `http://localhost:8212/` 입니다.
 
+<img src="https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/images/AdminPageSample.png?raw=true" width="300px">
+
 ## 동작 원리
 
 ### 서버 자동 시작
