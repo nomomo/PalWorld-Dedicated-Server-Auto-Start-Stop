@@ -6,7 +6,7 @@
 
 # PalWorld-Dedicated-Server-Auto-Start-Stop
 
-- 이것은 PalWorld 서버를 자동으로 켜고 끄기 위한 간단한 파이썬 스크립트 입니다.
+- 이것은 PalWorld Windows 서버를 자동으로 켜고 끄기 위한 간단한 파이썬 스크립트 입니다.
 - PalWorld 서버가 구동 중이지 않을 때, 유저가 접속을 시도하면 자동으로 서버를 켭니다.
 - PalWorld 서버가 구동 중일 때, 온라인인 유저가 없으면 일정 시간 후 서버를 자동으로 끕니다.
 - Webserver 을 통해 서버를 On-Off 할 수 있는 Admin Page 를 제공합니다.

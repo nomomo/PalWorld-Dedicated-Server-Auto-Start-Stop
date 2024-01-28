@@ -6,7 +6,7 @@
 
 # PalWorld-Dedicated-Server-Auto-Start-Stop
 
-- This is a simple Python script for automatically turning on and off the Palworld server.
+- This is a simple Python script for automatically turning on and off the Palworld Windows server.
 - When the PalWorld server is not running, it automatically starts when a user attempts to connect.
 - When the PalWorld server is running and there are no online users, it automatically shuts down after a certain period.
 - Provides an Admin Page through the Webserver to turn the server on and off.
