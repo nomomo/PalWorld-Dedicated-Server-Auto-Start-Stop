@@ -72,7 +72,7 @@ def startServer():
     # filter 4: isStopEventRunning
     if isStopEventRunning():
         logging.warn(f"Stop event is running. starting server is ignored")
-        return
+        return False
     
     # close socket if opened
     closePalworldPortSocket()

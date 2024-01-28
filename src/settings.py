@@ -3,15 +3,15 @@ import json
 Settings = {
     # PalWorld
     "palworldExePath": r"C:\steamcmd\steamapps\common\PalServer\PalServer.exe", #PalWorld Server exe file
-    "palworldServerIP": "0.0.0.0",          # PalWorld Server IP. This is used for "Auto Start". use "0.0.0.0" to open to all. use "localhost" for testing or connection through router with port-forwarding
+    "palworldServerIP": "0.0.0.0",          # PalWorld Server IP. This is used for "Auto Start". use "0.0.0.0" to open to all. use "localhost" for testing.
     "palworldServerPort": 8211,             # PalWorld Server PublicPort. This is used for "Auto Start".
-    "palworldRCONHost": "localhost",        # RCON host. use "0.0.0.0" to open to all. use "localhost" for testing or connection through router with port-forwarding
+    "palworldRCONHost": "localhost",        # RCON host. use "0.0.0.0" to open to all. use "localhost" for testing.
     "palworldRCONPort": 25575,              # RCON Post. default is 25575
     "palworldAdminPassword": "topSecretPassword",   # AdminPassword
 
     # Web Server
     "useWebServer": True,                   # Use simple admin page
-    "webServerHost": "localhost",           # webserver hostname
+    "webServerHost": "localhost",           # webserver hostname. use "0.0.0.0" to open to all. use "localhost" for testing.
     "webServerPort": 8212,                  # webserver port
     "showAction": True,                     # show action area
     "showServerOnBtn": True,                # show "Server On" button
