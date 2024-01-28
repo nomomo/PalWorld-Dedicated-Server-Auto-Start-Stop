@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+		.running { 
+			color: #00ff18;
+			text-shadow: rgba(20,20,20,0.5) 0 0px 2px;
+		}
+		.off { 
+			color: red;
+			text-shadow: rgba(20,20,20,0.5) 0 0px 2px;
+		}
+
+		body, input { font-size: 24px; font-family: "Poppins", sans-serif; }
+		body { line-height:160%; margin: 50px 30px }
+
+		h1 { font-size: 48px; }
+		h2 { font-size: 30px; margin-bottom: 5px }
+
+		#playersInfo {margin-bottom:30px}
+
+		form { display:inline-block; margin-right:10px; }
+        input.btn { user-select: none; cursor:pointer }
+		.btnContainer { margin-bottom:30px }
+
+		#ServerCloseContainer { margin-bottom:15px; font-size:24px; color:red; }
+		.ServerCloseLeft { font-style:italic; text-decoration:underline }
+
+		#IPCopyBtn { user-select: none; border-radius:5px; background:#ddd; font-size:16px; color:#666; vertical-align:middle; padding:2px; margin-left:5px; cursor:pointer }
+		#copied { user-select: none; font-size:14px; vertical-align:middle; padding: 3px 10px; margin-left:5px; cursor:pointer }
+
+		#footer {
+			line-height: 120%;
+		}
+		#lastUpdatedContainer { margin-top:30px; font-size: 16px; color:#999; }
+		#madeBy { margin-top:0px; font-size: 16px; }
+		#madeBy a, #madeBy a:visited { color:#52a1ff; }
+		#madeBy a:hover { color:#4197ff; }
+    </style>
+    <title>PalWorld-Dedicated-Server-Auto-Start-Stop Admin Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // Function to handle server action (On/Off)
+        function handleServerAction(action) {
+			if(action == "startServer" || action == "stopServer"){
+				setTimeout(function(){
+					handleServerAction("get_status");
+				},5000);
+			}
+		
+            $.ajax({
+                url: '/action',
+                type: 'POST',
+                data: { action: action },
+                success: function(response) {
+					let data = response.data;
+					console.log("response", response)
+
+                    // Update server status on the page
+					if(data.running){
+						$(".running").show();
+						$(".off").hide();
+						$("#offBtn").show();
+						$("#onBtn").hide();
+						
+						if(data.playerCount == 0 && response.isRunningStopwatchToStopServer){
+							$("#ServerCloseContainer").show();
+							$("#ServerCloseLeft").text(response.leftTimeToStopServer);
+						}
+						else{
+							$("#ServerCloseContainer").hide();
+						}
+					}
+					else{
+						$("#ServerCloseContainer").hide();
+						$(".running").hide();
+						$(".off").show();
+						$("#offBtn").hide();
+						$("#onBtn").show();
+					}
+					
+					//$("#ServerAutoOffTime").text(data.ServerAutoStopSeconds);
+					
+                    // Update players information if needed
+					$("#playerCount").text(String(data.playerCount));
+                    if (data.playerCount > 0) {
+						let strtmp ="";
+						for(let i=0;i<data.playerCount;++i){
+							strtmp += `<div>- ${data.players[i][0]}</div>`;
+						}
+                        $('#playersInfo').html(strtmp);
+                    }
+					else{
+						$('#playersInfo').text("- There is no player");
+					}
+					
+					$("#lastUpdatedText").text(new Date());
+                }
+            });
+            return false; // Prevent the default form submission
+        }
+		
+		$(document).ready(function(){
+			handleServerAction("getStatus");
+		});
+
+		setInterval(function(){
+			handleServerAction("getStatus");
+		},1000 * 30);
+		
+        function copyToClipboard(text, callbackSuccess, callbackFailed) {
+            navigator.clipboard.writeText(text).then(function() {
+                console.log('Text copied to clipboard: ' + text);
+				callbackSuccess();
+            }).catch(function(err) {
+                console.error('Unable to copy text to clipboard', err);
+				callbackFailed();
+            });
+        }
+		
+		$(document).on("click", "#IPCopyBtn", function(e){
+			console.log("copy button clicked");
+			copyToClipboard($("#IP").text(),
+			function(){
+				$("#copied").fadeIn(100).text("Copied!!");
+				setTimeout(function(){$("#copied").fadeOut()},1000);
+			},
+			function(){
+				$("#copied").fadeIn(100).text("Error!!");
+				setTimeout(function(){$("#copied").fadeOut()},1000);
+			});
+		});
+    </script>
+</head>
+<body>
+    <h1>Server Status: <span id="serverStatus"><span class="running" {% if not data.running %} style="display:none"{% endif %}>Running</span><span class="off" {% if data.running %} style="display:none"{% endif %}>Off</span></span></h1>
+    <h2>Current players:<span id="playerCount"> ?</span></h2>
+    <div id="playersInfo"> - Loading... </div>
+    
+    {% if showAction %}
+	<h2>Actions</h2>
+	<div class="btnContainer">
+		<form id="getStatusBtn" title="Refresh server status and player information" onsubmit="return handleServerAction('getStatus')">
+			<input class="btn" type="submit" value="Update Server Status">
+		</form>
+		
+		{% if showServerOffBtn %}
+		<form id="offBtn" {% if not data.running %}style="display:none;"{% endif %} onsubmit="return handleServerAction('stopServer')">
+			<input class="btn" type="submit" value="Server Off">
+		</form>
+		{% endif %}
+		
+		{% if showServerOnBtn %}
+		<form id="onBtn" {% if data.running %}style="display:none;"{% endif %} onsubmit="return handleServerAction('startServer')">
+			<input class="btn" type="submit" value="Server On">
+		</form>
+		{% endif %}
+	</div>
+    {% endif %}
+	
+	<div style="margin-top:30px;">Notice: If there is are no players online, the server will automatically stop after <span id="ServerAutoOffTime">{{ ServerAutoStopSeconds }}</span> seconds.</div>
+	<div id="ServerCloseContainer" style="display:none;">[!!] There are no players currently on the server. The server will automatically shut down in approximately <span id="ServerCloseLeft">{{ leftTimeToStopServer }}</span> seconds. [!!]</div>
+    
+	{% if showServerIPAddress %}
+	<div style="margin-top:30px;">Server IP: <span id="IP">{{ data.IPAddress }}</span><span id="IPCopyBtn">copy</span><span id="copied" style="display:none">Copied!!</span></div>
+    {% endif %}
+		
+	<div id="footer">
+		<div id="lastUpdatedContainer">Last Updated: <span id="lastUpdatedText">None</span></div>
+		<div id="madeBy"><a href="https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop" target="_blank">PalWorld-Dedicated-Server-Auto-Start-Stop @ Nomo</a></div>
+	</div>
+</body>
+</html>
