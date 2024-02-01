@@ -113,6 +113,10 @@ python main.py
 1. RCON을 통해 현재 서버에 있는 플레이어 수를 체크합니다. (`ShowPlayers` command)
 1. 플레이어 수가 0이면 RCON을 통해 `Shutdown` command 를 사용하여 서버를 정상 종료합니다.
 
+## Known issue
+
+- 서버 재시작 없이 socket 연결이 아주 오래 열려있을 때 Auto Start 가 동작하지 않는 문제.
+
 ## Future works
 
 언제 걸릴지 모름
@@ -122,6 +126,9 @@ python main.py
 - Admin page 꾸미기
 - setting.py 파일을 수정하는 대신 settings.json 파일을 읽어 설정을 적용하도록 하기
 - 일정 시간마다 서버를 자동으로 재부팅. 재부팅 전 서버 메시지로 일정 간격마다 미리 알림
+- 자동 백업
+- IP Blacklist
+- known issue 수정
 
 ## Change logs
 

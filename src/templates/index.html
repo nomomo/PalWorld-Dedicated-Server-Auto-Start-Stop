@@ -133,6 +133,11 @@
 				setTimeout(function(){$("#copied").fadeOut()},1000);
 			});
 		});
+
+		// if clipboard is available, show copy button
+		if(navigator.clipboard !== undefined){
+			$("#IPCopyBtn").show();
+		}
     </script>
 </head>
 <body>
@@ -165,7 +170,7 @@
 	<div id="ServerCloseContainer" style="display:none;">[!!] There are no players currently on the server. The server will automatically shut down in approximately <span id="ServerCloseLeft">{{ leftTimeToStopServer }}</span> seconds. [!!]</div>
     
 	{% if showServerIPAddress %}
-	<div style="margin-top:30px;">Server IP: <span id="IP">{{ data.IPAddress }}</span><span id="IPCopyBtn">copy</span><span id="copied" style="display:none">Copied!!</span></div>
+	<div style="margin-top:30px;">Server IP: <span id="IP">{{ data.IPAddress }}</span><span id="IPCopyBtn" style="display:none;">copy</span><span id="copied" style="display:none">Copied!!</span></div>
     {% endif %}
 		
 	<div id="footer">

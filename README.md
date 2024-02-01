@@ -113,6 +113,10 @@ If `"useWebServer": True` is set in the configuration, check if the Admin Page i
 1. It checks the number of players currently on the server through RCON (`ShowPlayers` command).
 2. If the number of players is 0, it uses RCON to gracefully shut down the server with the `Shutdown` command.
 
+## Known issue
+
+- Auto Start does not work when a socket connection is left open for a very long time without restarting the server.
+
 ## Future Works
 
 Timing uncertain:
@@ -122,6 +126,9 @@ Timing uncertain:
 - Beautify the Admin page
 - Read settings from a `settings.json` file instead of modifying the `setting.py` file
 - Automatically restart the server at regular intervals. Notify in advance through server messages before restarting.
+- Auto backup
+- IP Blacklist
+- Fix known issue
 
 ## Change Logs
 
