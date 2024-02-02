@@ -47,7 +47,7 @@ def checkEventStopServerCore(callback):
             stopServerVariables["stopEventTriggeredTime"] = time.time()     # save triggered time
             stopServerVariables["isRunningStopwatchToStopServer"] = True    # save flag
 
-        ServerAutoStopSeconds = Settings["ServerAutoStopSeconds"]
+        ServerAutoStopSeconds = Settings.ServerAutoStopSeconds
         passedTime = currentTime - stopServerVariables["stopEventTriggeredTime"]
         if passedTime >= ServerAutoStopSeconds:
             logging.info("The server stop conditions are met, attempting to stop the server.")
@@ -65,7 +65,7 @@ def checkEventStopServerCore(callback):
         return None
 
 def runSchedule():
-    ServerAutoStopCheckInterval = Settings["ServerAutoStopCheckInterval"]
+    ServerAutoStopCheckInterval = Settings.ServerAutoStopCheckInterval
     while True:
         schedule.run_pending()
         time.sleep(ServerAutoStopCheckInterval * 0.1)
@@ -79,7 +79,7 @@ def checkEventStopServer():
     # manually start once
     checkEventStopServerCore(None)
 
-    ServerAutoStopCheckInterval = Settings["ServerAutoStopCheckInterval"]
+    ServerAutoStopCheckInterval = Settings.ServerAutoStopCheckInterval
     schedule.every(ServerAutoStopCheckInterval).seconds.do(checkEventStopServerCore, callback=None)
 
     thread = threading.Thread(target=runSchedule)

@@ -48,14 +48,14 @@ pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
 
 ### Modify setting.py File
 
-Modify the `src\settings.py` file according to your server settings.
+Modify the `src\settings.json` file according to your server settings.
 
 For the `palworldExePath`, enter the path to `{PalServerPath}\PalServer\PalServer.exe`.
 
-```python
-Settings = {
+```json
+{
     # PalWorld
-    "palworldExePath": r"C:\steamcmd\steamapps\common\PalServer\PalServer.exe", #PalWorld Server exe file
+    "palworldExePath": "C:\\steamcmd\\steamapps\\common\\PalServer\\PalServer.exe", #PalWorld Server exe file
     "palworldServerIP": "0.0.0.0",          # PalWorld Server IP. This is used for "Auto Start". Use "0.0.0.0" to open to all. use "localhost"
     "palworldServerPort": 8211,             # PalWorld Server PublicPort in PalWorldSettings.ini. This is used for "Auto Start".
     "palworldRCONHost": "localhost",        # RCON host. use "0.0.0.0" to open to all. use "localhost".
@@ -63,26 +63,23 @@ Settings = {
     "palworldAdminPassword": "topSecretPassword",   # AdminPassword in PalWorldSettings.ini
 
     # Web Server
-    "useWebServer": True,                   # Use simple admin page
+    "useWebServer": true,                   # Use simple admin page
     "webServerHost": "localhost",           # webserver hostname. use "0.0.0.0" to open to all. use "localhost"
     "webServerPort": 8212,                  # webserver port
-    "showAction": True,                     # show action area
-    "showServerOnBtn": True,                # show "Server On" button
-    "showServerOffBtn": True,               # show "Server Off" button
-    "showUpdateServerStatusBtn": True,      # show "Update Server Status" button
-    "showServerIPAddress": True,            # show IP Address
-    
+    "showAction": true,                     # show action area
+    "showServerOnBtn": true,                # show "Server On" button
+    "showServerOffBtn": true,               # show "Server Off" button
+    "showUpdateServerStatusBtn": true,      # show "Update Server Status" button
+    "showServerIPAddress": true,            # show IP Address
+
     # Auto Start
-    "useAutoStart": True,                   # when user try to access, start the server automatically
+    "useAutoStart": true,                   # when user try to access, start the server automatically
 
     # Auto Stop
-    "useAutoStop": True,                    # if True && there is are no players online, server will automatically stop
+    "useAutoStop": true,                    # if True && there is are no players online, server will automatically stop
     "ServerAutoStopSeconds": 600.0,         # the server will automatically stop after ServerAutoStopSeconds seconds.
     "ServerAutoStopCheckInterval": 10.0,    # AutoStop event is checked every ServerAutoStopCheckInterval seconds.
-
-    # Advanced
-    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe",    # don't change, if there is no problem
-    "firstPacketPattern": b'\x09\x08\x00\x04\x40\x84\x92\x34\x01'
+    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"    # don't change, if there is no problem
 }
 ```
 
@@ -105,17 +102,13 @@ If `"useWebServer": True` is set in the configuration, check if the Admin Page i
 ### Automatic Server Start
 
 1. When the PalWorld server is not running, it opens port 8211 to receive packets.
-2. It waits for a packet starting with `\x09\x08\x00\x04\x40\x84\x92\x34\x01`.
+2. It waits for a packet starting with `\x09\x08\x00`.
 3. Once the packet is received, it closes port 8211 and executes the file located at `palworldExePath` to start the server.
 
 ### Automatic Server Shutdown
 
 1. It checks the number of players currently on the server through RCON (`ShowPlayers` command).
 2. If the number of players is 0, it uses RCON to gracefully shut down the server with the `Shutdown` command.
-
-## Known issue
-
-- Auto Start does not work when a socket connection is left open for a very long time without restarting the server.
 
 ## Future Works
 
@@ -124,13 +117,16 @@ Timing uncertain:
 - Code cleanup
 - Support for pip install
 - Beautify the Admin page
-- Read settings from a `settings.json` file instead of modifying the `setting.py` file
 - Automatically restart the server at regular intervals. Notify in advance through server messages before restarting.
 - Auto backup
 - IP Blacklist
-- Fix known issue
 
 ## Change Logs
+
+### 0.0.2 (2024-02-03)
+
+- Changed to edit settings.json instead of settings.py file for settings
+- Fixed an issue where UDT connections were terminated when random packets were input to the socket.
 
 ### 0.0.1 (2024-01-28)
 

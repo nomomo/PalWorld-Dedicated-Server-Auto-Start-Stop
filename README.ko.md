@@ -48,14 +48,14 @@ pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
 
 ### setting.py 파일 수정
 
-서버 설정에 맞게 `src\settings.py` 파일을 수정합니다.
+서버 설정에 맞게 `src\settings.json` 파일을 수정합니다.
 
 `palworldExePath` 에는 `{PalServerPath}\PalServer\PalServer.exe` 의 경로를 입력하십시오.
 
-```Python
-Settings = {
+```json
+{
     # PalWorld
-    "palworldExePath": r"C:\steamcmd\steamapps\common\PalServer\PalServer.exe", #PalWorld Server exe file
+    "palworldExePath": "C:\\steamcmd\\steamapps\\common\\PalServer\\PalServer.exe", #PalWorld Server exe file
     "palworldServerIP": "0.0.0.0",          # PalWorld Server IP. This is used for "Auto Start". Use "0.0.0.0" to open to all. use "localhost"
     "palworldServerPort": 8211,             # PalWorld Server PublicPort in PalWorldSettings.ini. This is used for "Auto Start".
     "palworldRCONHost": "localhost",        # RCON host. use "0.0.0.0" to open to all. use "localhost".
@@ -63,26 +63,23 @@ Settings = {
     "palworldAdminPassword": "topSecretPassword",   # AdminPassword in PalWorldSettings.ini
 
     # Web Server
-    "useWebServer": True,                   # Use simple admin page
+    "useWebServer": true,                   # Use simple admin page
     "webServerHost": "localhost",           # webserver hostname. use "0.0.0.0" to open to all. use "localhost"
     "webServerPort": 8212,                  # webserver port
-    "showAction": True,                     # show action area
-    "showServerOnBtn": True,                # show "Server On" button
-    "showServerOffBtn": True,               # show "Server Off" button
-    "showUpdateServerStatusBtn": True,      # show "Update Server Status" button
-    "showServerIPAddress": True,            # show IP Address
-    
+    "showAction": true,                     # show action area
+    "showServerOnBtn": true,                # show "Server On" button
+    "showServerOffBtn": true,               # show "Server Off" button
+    "showUpdateServerStatusBtn": true,      # show "Update Server Status" button
+    "showServerIPAddress": true,            # show IP Address
+
     # Auto Start
-    "useAutoStart": True,                   # when user try to access, start the server automatically
+    "useAutoStart": true,                   # when user try to access, start the server automatically
 
     # Auto Stop
-    "useAutoStop": True,                    # if True && there is are no players online, server will automatically stop
+    "useAutoStop": true,                    # if True && there is are no players online, server will automatically stop
     "ServerAutoStopSeconds": 600.0,         # the server will automatically stop after ServerAutoStopSeconds seconds.
     "ServerAutoStopCheckInterval": 10.0,    # AutoStop event is checked every ServerAutoStopCheckInterval seconds.
-
-    # Advanced
-    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe",    # don't change, if there is no problem
-    "firstPacketPattern": b'\x09\x08\x00\x04\x40\x84\x92\x34\x01'
+    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"    # don't change, if there is no problem
 }
 ```
 
@@ -105,17 +102,13 @@ python main.py
 ### 서버 자동 시작
 
 1. PalWorld 서버가 구동 중이지 않으면 8211 포트를 열어 패킷을 수신합니다.
-1. `\x09\x08\x00\x04\x40\x84\x92\x34\x01` 으로 시작하는 패킷이 수신되길 기다립니다.
+1. `\x09\x08\x00` 으로 시작하는 패킷이 수신되길 기다립니다.
 1. 패킷이 수신되면 8211 포트를 닫고, `palworldExePath` 경로에 위치한 파일을 실행하여 서버를 시작합니다.
 
 ### 서버 자동 정지
 
 1. RCON을 통해 현재 서버에 있는 플레이어 수를 체크합니다. (`ShowPlayers` command)
 1. 플레이어 수가 0이면 RCON을 통해 `Shutdown` command 를 사용하여 서버를 정상 종료합니다.
-
-## Known issue
-
-- 서버 재시작 없이 socket 연결이 아주 오래 열려있을 때 Auto Start 가 동작하지 않는 문제.
 
 ## Future works
 
@@ -124,13 +117,16 @@ python main.py
 - 코드 정리
 - pip install 지원
 - Admin page 꾸미기
-- setting.py 파일을 수정하는 대신 settings.json 파일을 읽어 설정을 적용하도록 하기
 - 일정 시간마다 서버를 자동으로 재부팅. 재부팅 전 서버 메시지로 일정 간격마다 미리 알림
 - 자동 백업
 - IP Blacklist
-- known issue 수정
 
 ## Change logs
+
+### 0.0.2 (2024-02-03)
+
+- 설정을 위해 settings.py 파일 대신 settings.json 을 수정하도록 변경
+- 소켓에 임의의 패킷이 입력되는 경우 UDT 연결이 종료되는 문제 수정
 
 ### 0.0.1 (2024-01-28)
 

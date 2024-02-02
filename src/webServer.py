@@ -14,7 +14,7 @@ def getServerIP():
     global IP
     try:
         IP = socket.gethostbyname(socket.gethostname())
-        IP = IP + ":" + str(Settings["palworldServerPort"])
+        IP = IP + ":" + str(Settings.palworldServerPort)
     except Exception as e:
         logging.error(f"Error while getting server IP, {e}")
         IP ="unknown"
@@ -25,22 +25,22 @@ def getServerIP():
 @app.route("/")
 def index():
     currentServerInfo = updateCurrentServerInfo()
-    if Settings["showServerIPAddress"]:
+    if Settings.showServerIPAddress:
         currentServerInfo["IPAddress"] = getServerIP()
     else:
         currentServerInfo["IPAddress"] = "Unknown"
 
-    print("showAction", Settings["showAction"]);
+    print("showAction", Settings.showAction)
 
     return render_template(
         "index.html",
-        showAction=Settings["showAction"],
-        showServerOnBtn=Settings["showServerOnBtn"],
-        showServerOffBtn=Settings["showServerOffBtn"],
-        showUpdateServerStatusBtn=Settings["showUpdateServerStatusBtn"],
-        showServerIPAddress=Settings["showServerIPAddress"],
+        showAction=Settings.showAction,
+        showServerOnBtn=Settings.showServerOnBtn,
+        showServerOffBtn=Settings.showServerOffBtn,
+        showUpdateServerStatusBtn=Settings.showUpdateServerStatusBtn,
+        showServerIPAddress=Settings.showServerIPAddress,
         data=currentServerInfo,
-        ServerAutoStopSeconds=round(Settings["ServerAutoStopSeconds"]),
+        ServerAutoStopSeconds=round(Settings.ServerAutoStopSeconds),
         isRunningStopwatchToStopServer=round(stopServerVariables["isRunningStopwatchToStopServer"]),
         leftTimeToStopServer=round(stopServerVariables["leftTimeToStopServer"])
     )
@@ -62,7 +62,7 @@ def webServerAction():
 
     return jsonify(
         data=currentServerInfo,
-        ServerAutoStopSeconds=round(Settings["ServerAutoStopSeconds"]),
+        ServerAutoStopSeconds=round(Settings.ServerAutoStopSeconds),
         isRunningStopwatchToStopServer=round(stopServerVariables["isRunningStopwatchToStopServer"]),
         leftTimeToStopServer=round(stopServerVariables["leftTimeToStopServer"])
     )
@@ -70,4 +70,4 @@ def webServerAction():
 
 def runWebServer():
     logging.info("Start webserver")
-    app.run(host=Settings["webServerHost"], port=Settings["webServerPort"], debug=False)
+    app.run(host=Settings.webServerHost, port=Settings.webServerPort, debug=False)

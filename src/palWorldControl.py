@@ -23,7 +23,7 @@ triggeredTimeCheckStoppedEvent = -1    # reference time when stop event is trigg
 isTriggeredCheckStoppedEvent = False   # true if stop event is running
 
 def isPalWorldProcessRunning():
-    ProcName = Settings["palworldMainProcessName"]
+    ProcName = Settings.palworldMainProcessName
     for process in psutil.process_iter(['pid', 'name']):
         if process.info['name'] == ProcName:
             return True
@@ -32,7 +32,7 @@ def isPalWorldProcessRunning():
 # Function to send RCON command
 def sendRCONCommand(command):
     try:
-        console = Console(host=Settings["palworldRCONHost"], port=Settings["palworldRCONPort"], password=Settings["palworldAdminPassword"])
+        console = Console(host=Settings.palworldRCONHost, port=Settings.palworldRCONPort, password=Settings.palworldAdminPassword)
         response = console.command(command)
         logging.info(f"[PALWORLD_RCON]: {str(response)}")
         console.close()
@@ -47,7 +47,7 @@ def startServer():
 
     global isPalWorldServerStarting, lastServerStartedTime, ServerStartingCoolTime, lastServerStoppedTime, ServerStoppingCoolTime
     logging.info("The server start has been triggered.")
-    palworldExePath = Settings["palworldExePath"]
+    palworldExePath = Settings.palworldExePath
     currentTime = time.time()
 
     if isPalWorldProcessRunning():
@@ -142,7 +142,7 @@ def stopServer(delaySeconds, force=False):
 
     if force:
         # not tested. delay ignored
-        terminateProcess(Settings["palworldMainProcessName"])
+        terminateProcess(Settings.palworldMainProcessName)
     else:    
         # filter 1
         if not isPalWorldProcessRunning():

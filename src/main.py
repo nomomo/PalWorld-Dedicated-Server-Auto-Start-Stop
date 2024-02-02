@@ -1,4 +1,4 @@
-from settings import Settings
+from settings import Settings, readSettings
 from webServer import runWebServer
 from autoStart import listenPalworldAccess
 from autoStop import checkEventStopServer
@@ -18,13 +18,16 @@ if __name__ == '__main__':
             ]
         )
 
-        if Settings["useAutoStart"]:
+        # read settings if settings.json exists
+        readSettings("settings.json")
+
+        if Settings.useAutoStart:
             listenPalworldAccess()
 
-        if Settings["useAutoStop"]:
+        if Settings.useAutoStop:
             checkEventStopServer()
 
-        if Settings["useWebServer"]:
+        if Settings.useWebServer:
             runWebServer()
 
     except Exception as e:

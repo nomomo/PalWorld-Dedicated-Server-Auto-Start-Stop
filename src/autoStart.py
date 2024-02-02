@@ -28,8 +28,8 @@ def openPalworldPortSocket():
         closePalworldPortSocket()
         
         isBreak = False
-        palworldServerIP = Settings["palworldServerIP"]
-        palworldServerPort = Settings["palworldServerPort"]
+        palworldServerIP = Settings.palworldServerIP
+        palworldServerPort = Settings.palworldServerPort
         
         logging.info(f"To detect attempts to connect to the PalWorld Server, open the port {palworldServerPort}.")
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -44,6 +44,7 @@ def openPalworldPortSocket():
 
 # close socket
 def closePalworldPortSocket():
+    logging.info("closePalworldPortSocket")
     global sock, isBreak
     isBreak = True
     try:
@@ -62,14 +63,11 @@ def closePalworldPortSocket():
 
 # listen from PalWorld server port
 def listenPalworldAccessCore():
-    palworldServerPort = Settings["palworldServerPort"]
-    firstPacketPattern = Settings["firstPacketPattern"]
-
     if isPalWorldProcessRunning():
         return
 
-    if not isPortAvailable(palworldServerPort):
-        logging.error(f"Palworld process is not running, but cannot open port {palworldServerPort}")
+    if not isPortAvailable(Settings.palworldServerPort):
+        logging.error(f"Palworld process is not running, but cannot open port {Settings.palworldServerPort}")
         return
     
     if not openPalworldPortSocket():
@@ -77,6 +75,8 @@ def listenPalworldAccessCore():
         return
 
     logging.info("Detecting attempts to connect to the PalWorld Server.")
+
+    isServerStarted = False
 
     while True:
         try:
@@ -86,17 +86,23 @@ def listenPalworldAccessCore():
 
             data, addr = sock.recvfrom(1024)
             hex_data = " ".join(format(byte, "02X") for byte in data)
-            logging.info(f"[LISTEN_PALWORLD_PORT] {addr}: {hex_data}")
 
-            if data.startswith(firstPacketPattern):
+            if data.startswith(Settings.firstPacketPattern):
+                logging.info(f"[LISTEN_PALWORLD_PORT][DETECTED] {addr}: {hex_data}")
                 logging.info("A packet corresponding to a connection attempt has been detected. Attempting to start the server.")
-                startServer()
+                isServerStarted = True
+                break
             else:
-                print("Not the first packet.")
+                logging.info(f"[LISTEN_PALWORLD_PORT][IGNORED] {addr}: {hex_data}")
         except UnicodeDecodeError as e:
             print(f"Error decoding data from {addr}: {e}")
-
-        break
+        except Exception as e:
+            logging.error(f"Error from listenPalworldAccessCore: {e}")
+            logging.error(traceback.format_exc())
+            
+    if isServerStarted:
+        closePalworldPortSocket()
+        startServer()
 
 
 def listenPalworldAccess():
