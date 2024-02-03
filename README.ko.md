@@ -54,32 +54,32 @@ pip install flask psutil schedule git+https://github.com/ttk1/py-rcon.git
 
 ```json
 {
-    # PalWorld
-    "palworldExePath": "C:\\steamcmd\\steamapps\\common\\PalServer\\PalServer.exe", #PalWorld Server exe file
-    "palworldServerIP": "0.0.0.0",          # PalWorld Server IP. This is used for "Auto Start". Use "0.0.0.0" to open to all. use "localhost"
-    "palworldServerPort": 8211,             # PalWorld Server PublicPort in PalWorldSettings.ini. This is used for "Auto Start".
-    "palworldRCONHost": "localhost",        # RCON host. use "0.0.0.0" to open to all. use "localhost".
-    "palworldRCONPort": 25575,              # RCONPort in PalWorldSettings.ini. Default is 25575
-    "palworldAdminPassword": "topSecretPassword",   # AdminPassword in PalWorldSettings.ini
+    // PalWorld
+    "palworldExePath": "C:\\steamcmd\\steamapps\\common\\PalServer\\PalServer.exe", //PalWorld Server exe file
+    "palworldServerIP": "0.0.0.0",          // PalWorld Server IP. This is used for "Auto Start". Use "0.0.0.0" to open to all. use "localhost"
+    "palworldServerPort": 8211,             // PalWorld Server PublicPort in PalWorldSettings.ini. This is used for "Auto Start".
+    "palworldRCONHost": "localhost",        // RCON host. use "0.0.0.0" to open to all. use "localhost".
+    "palworldRCONPort": 25575,              // RCONPort in PalWorldSettings.ini. Default is 25575
+    "palworldAdminPassword": "topSecretPassword",   // AdminPassword in PalWorldSettings.ini
 
-    # Web Server
-    "useWebServer": true,                   # Use simple admin page
-    "webServerHost": "localhost",           # webserver hostname. use "0.0.0.0" to open to all. use "localhost"
-    "webServerPort": 8212,                  # webserver port
-    "showAction": true,                     # show action area
-    "showServerOnBtn": true,                # show "Server On" button
-    "showServerOffBtn": true,               # show "Server Off" button
-    "showUpdateServerStatusBtn": true,      # show "Update Server Status" button
-    "showServerIPAddress": true,            # show IP Address
+    // Web Server
+    "useWebServer": true,                   // Use simple admin page
+    "webServerHost": "localhost",           // webserver hostname. use "0.0.0.0" to open to all. use "localhost"
+    "webServerPort": 8212,                  // webserver port
+    "showAction": true,                     // show action area
+    "showServerOnBtn": true,                // show "Server On" button
+    "showServerOffBtn": true,               // show "Server Off" button
+    "showUpdateServerStatusBtn": true,      // show "Update Server Status" button
+    "showServerIPAddress": true,            // show IP Address
 
-    # Auto Start
-    "useAutoStart": true,                   # when user try to access, start the server automatically
+    // Auto Start
+    "useAutoStart": true,                   // when user try to access, start the server automatically
 
-    # Auto Stop
-    "useAutoStop": true,                    # if True && there is are no players online, server will automatically stop
-    "ServerAutoStopSeconds": 600.0,         # the server will automatically stop after ServerAutoStopSeconds seconds.
-    "ServerAutoStopCheckInterval": 10.0,    # AutoStop event is checked every ServerAutoStopCheckInterval seconds.
-    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"    # don't change, if there is no problem
+    // Auto Stop
+    "useAutoStop": true,                    // if True && there is are no players online, server will automatically stop
+    "ServerAutoStopSeconds": 600.0,         // the server will automatically stop after ServerAutoStopSeconds seconds.
+    "ServerAutoStopCheckInterval": 10.0,    // AutoStop event is checked every ServerAutoStopCheckInterval seconds.
+    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"    // don't change, if there is no problem
 }
 ```
 
