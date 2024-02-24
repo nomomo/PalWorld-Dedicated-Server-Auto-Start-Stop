@@ -97,6 +97,20 @@ If `"useWebServer": True` is set in the configuration, check if the Admin Page i
 
 <img src="https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/images/AdminPageSample.png?raw=true" width="300px">
 
+## Known Issue
+
+- The ShowPlayers command does not work in RCON Commands if the user's nickname contains Unicode characters. This error occurs because the number of characters received that should be read differs from the number of characters actually received.
+- Workaround: Open the connection.py file installed with the py-rcon package and modify the contents of the _read function as follows:
+
+```Python
+def _read(self, length):
+    packet_data = self.sock.recv(length)
+    if len(packet_data) < length:
+        #raise Exception('Received few bytes!') # disable raise exception
+        return packet_data
+    return packet_data
+```
+
 ## How does this script work?
 
 ### Automatic Server Start

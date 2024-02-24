@@ -97,6 +97,20 @@ python main.py
 
 <img src="https://github.com/nomomo/PalWorld-Dedicated-Server-Auto-Start-Stop/blob/main/images/AdminPageSample.png?raw=true" width="300px">
 
+## Known Issue
+
+- 유저의 닉네임에 유니코드 문자가 포함되면 RCON Commands 에서 ShowPlayers 명령이 동작하지 않습니다. 이 오류는 수신된 읽어야 하는 문자 개수와 실제 수신된 문자의 개수가 달라 발생합니다.
+- 해결 방법: 설치된 py-rcon 패키지와 함께 설치된 connection.py 파일을 열고 _read 함수의 내용을 다음과 같이 수정합니다.
+
+```Python
+def _read(self, length):
+    packet_data = self.sock.recv(length)
+    if len(packet_data) < length:
+        #raise Exception('Received few bytes!') # disable raise exception
+        return packet_data
+    return packet_data
+```
+
 ## 동작 원리
 
 ### 서버 자동 시작
