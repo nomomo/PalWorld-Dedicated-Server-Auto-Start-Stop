@@ -79,7 +79,7 @@ For the `palworldExePath`, enter the path to `{PalServerPath}\PalServer\PalServe
     "useAutoStop": true,                    // if True && there is are no players online, server will automatically stop
     "ServerAutoStopSeconds": 600.0,         // the server will automatically stop after ServerAutoStopSeconds seconds.
     "ServerAutoStopCheckInterval": 10.0,    // AutoStop event is checked every ServerAutoStopCheckInterval seconds.
-    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"    // don't change, if there is no problem
+    "palworldMainProcessName": "PalServer-Win64-Shipping-Cmd.exe"    // don't change, if there is no problem
 }
 ```
 

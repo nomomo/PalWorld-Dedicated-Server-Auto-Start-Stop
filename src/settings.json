@@ -17,5 +17,5 @@
     "useAutoStop": true,
     "ServerAutoStopSeconds": 600.0,
     "ServerAutoStopCheckInterval": 10.0,
-    "palworldMainProcessName": "PalServer-Win64-Test-Cmd.exe"
+    "palworldMainProcessName": "PalServer-Win64-Shipping-Cmd.exe"
 }
